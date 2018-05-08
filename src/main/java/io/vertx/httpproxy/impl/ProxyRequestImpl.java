@@ -414,7 +414,10 @@ public class ProxyRequestImpl implements ProxyRequest {
 
       // Apply body filter
       ReadStream<Buffer> bodyStream = bodyFilter.apply(backResponse);
-
+      bodyStream.handler(b->{
+    	  	byte[] bb = b.getBytes();
+    	  	System.out.println(new String(bb));
+      });
       if (frontRequest.method() == HttpMethod.HEAD) {
         frontRequest = null;
         frontResponse.end();

@@ -487,6 +487,9 @@ public class HttpProxyImpl implements HttpProxy {
                 proxyResp.set(cachedResp);
                 proxyResp.send(ar2 -> {
                   // Done
+                	String s = ar2.toString();
+                	System.out.println(s);
+                	
                 });
                 cachedResp.send();
               } else {
