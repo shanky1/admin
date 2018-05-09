@@ -20,7 +20,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="entry in alertmanager.config | orderBy: 'job_id'">
+            <tr ng-repeat="entry in alertmanager.data.config | orderBy: 'job_id'">
               <td><label><input type="checkbox"></label></td>
               <td>{{entry.job_id}}</td>
               <td>{{entry.job_name}}</td>
@@ -56,29 +56,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Traffic Job</td>
-      <td>1</td>
-      <td>30/10/2018</td>
-      <td>john@example.com</td>
+    <tr ng-repeat="entry in alertmanager.data.history | orderBy: 'job_id'">
+      <td>{{entry.job_name}}</td>
+      <td>{{entry.job_id}}</td>
+      <td>{{entry.alert_time}}</td>
+      <td>{{entry.emails}}</td>
       <td align="center"><a class="btn btn-danger" href="#">
-  <i class="fa fa-trash-o fa-lg"></i> Delete</a></td>
-    </tr>
-    <tr>
-      <td>Airport Job</td>
-      <td>2</td>
-      <td>3/10/2018</td>
-      <td>john@example.com</td>
-      <td align="center"><a class="btn btn-danger" href="#">
-  <i class="fa fa-trash-o fa-lg"></i> Delete</a></td>
-    </tr>
-    <tr>
-      <td>Software Job</td>
-      <td>3</td>
-      <td>30/2/2018</td>
-      <td>john@example.com</td>
-      <td align="center"><a class="btn btn-danger" href="#">
-  <i class="fa fa-trash-o fa-lg"></i> Delete</a></td>
+        <i class="fa fa-trash-o fa-lg"></i> Delete</a></td>
     </tr>
   </tbody>
 </table>

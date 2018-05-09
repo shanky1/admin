@@ -108,9 +108,8 @@ public class Main {
   
   private void writeAlertConfig(HttpServerRequest req, Configuration conf) throws IOException {
 	  new AdminManager(conf).fetchAlertConfig(req);
-	
 }
-
+ 
 private void writePage(HttpServerRequest req,Configuration conf) throws MalformedURLException, IOException {
 	  new AdminManager(conf).enrichRequest(req);
   }

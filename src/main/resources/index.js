@@ -15,19 +15,19 @@ angular.module('flinkApp').config(["$stateProvider", "$urlRouterProvider", funct
     if ($scope.alertmanager == null) {
       $scope.alertmanager = {};
     }
-    return $scope.alertmanager['config'] = data;
+    return $scope.alertmanager['data'] = data;
   });
 }]);
 
 angular.module('flinkApp').service('AdminService', ["$http", "flinkConfig", "$q", function($http, flinkConfig, $q) {
-  var config;
-  config = {};
+  var data;
+  data = {};
   this.loadAlertConfig = function() {
     var deferred;
     deferred = $q.defer();
     $http.get("http://<HOST>:<PORT>/admin/alertConfig").success(function(data, status, headers, config) {
-      config = data.config;
-      return deferred.resolve(data.config);
+      data = data;
+      return deferred.resolve(data);
     });
     return deferred.promise;
   };
