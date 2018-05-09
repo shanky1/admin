@@ -10,23 +10,24 @@ angular.module('flinkApp').config(["$stateProvider", "$urlRouterProvider", funct
     });
   }]);
   
-  angular.module('flinkApp').controller('AdminController', ["$scope", "JobSubmitService", "$interval", "flinkConfig", "$state", "$location", function($scope, JobSubmitService, $interval, flinkConfig, $state, $location) {
-  $scope.yarn = $location.absUrl().indexOf("/proxy/application_") !== -1;
-  return $scope.loadList = function() {
-    return JobSubmitService.loadJarList().then(function(data) {
-      $scope.address = data.address;
-      $scope.noaccess = data.error;
-      return $scope.jars = data.files;
-    });
-  };
+ angular.module('flinkApp').controller('AdminController', ["$scope", "AdminService", function($scope, AdminService) {
+  return AdminService.loadAlertConfig().then(function(data) {
+    if ($scope.alertmanager == null) {
+      $scope.alertmanager = {};
+    }
+    return $scope.alertmanager['config'] = data;
+  });
 }]);
 
 angular.module('flinkApp').service('AdminService', ["$http", "flinkConfig", "$q", function($http, flinkConfig, $q) {
-  this.loadAlerList = function() {
+  var config;
+  config = {};
+  this.loadAlertConfig = function() {
     var deferred;
     deferred = $q.defer();
-    $http.get(flinkConfig.jobServer + "jars/").success(function(data, status, headers, config) {
-      return deferred.resolve(data);
+    $http.get("http://<HOST>:<PORT>/admin/alertConfig").success(function(data, status, headers, config) {
+      config = data.config;
+      return deferred.resolve(data.config);
     });
     return deferred.promise;
   };

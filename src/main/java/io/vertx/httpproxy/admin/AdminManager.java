@@ -13,15 +13,14 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 import io.vertx.core.http.HttpServerRequest;
+import io.vertx.httpproxy.Configuration;
 
 public class AdminManager {
 	
-	private String host;
-	private int port;
+	private Configuration conf;
 	
-	public AdminManager(String host, int port) {
-		this.host = host;
-		this.port = port;
+	public AdminManager(Configuration conf) {
+		this.conf = conf;
 	}
 	
 	private String readOnlineContent(URL url) throws IOException {
@@ -38,7 +37,7 @@ public class AdminManager {
 	}
 	
 	public void enrichJavaScriptRequest(HttpServerRequest req) throws IOException {
-		 	URL local = new URL("http",host,port,"/js/index.js");
+		 	URL local = new URL("http",conf.remoteHost , conf.remotePort,"/js/index.js");
 	        String content = readOnlineContent(local);
 	        StringBuilder sb  = new StringBuilder(content);
 	        insertState(sb);
@@ -48,14 +47,16 @@ public class AdminManager {
 	
 	
 	private void insertState(StringBuilder sb) throws IOException {
-		sb.append("\r\n").append(readFile(HTMLStuff.JAVASCRIPT.fileName()));
+		String content = readFile(HTMLStuff.JAVASCRIPT.fileName());
+		content = content.replaceAll("<HOST>", conf.host).replaceAll("<PORT>",String.valueOf(conf.port));
+		sb.append("\r\n").append(content);
 	}
 
 
 	public void enrichRequest(HttpServerRequest req) throws MalformedURLException, IOException {
 		
 			  
-			  Document doc = Jsoup.parse(new URL("http", host, port,"/"),60000);
+			  Document doc = Jsoup.parse(new URL("http", conf.remoteHost, conf.remotePort,"/"),60000);
 			  insertAdminMenu(doc);
 	          
 	          String content = doc.toString();
@@ -85,6 +86,11 @@ public class AdminManager {
 
 	public void enrichJAlertRequest(HttpServerRequest req) throws IOException {
 		String content = readFile(HTMLStuff.ALERT.fileName());
+		writeToRespose(req, content);
+	}
+
+	public void fetchAlertConfig(HttpServerRequest req) throws IOException {
+		String content = readFile("dummy-alerts.json");
 		writeToRespose(req, content);
 	}
 

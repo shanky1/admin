@@ -32,18 +32,19 @@ public class Main {
   public int port = 8090;
 
   @Parameter(names = "--address")
-  public String address = "0.0.0.0";
+  public String address = "localhost";
   
   @Parameter(names = "--remoteHost")
   public String remoteHost = "localhost";
   
   @Parameter(names = "--remotePort")
   public int remotePort = 8087;
-
+  
   public static void main(String[] args) {
     Main main = new Main();
     JCommander jc = new JCommander(main);
     jc.parse(args);
+    
     main.run();
     
     
@@ -58,7 +59,12 @@ public class Main {
     HttpProxy proxy = HttpProxy
         .reverseProxy(client)
         .target(remotePort, remoteHost);
-
+    Configuration conf = new Configuration();
+    conf.host = this.address;
+    conf.port = this.port;
+    conf.remoteHost = this.remoteHost;
+    conf.remotePort = this.remotePort;
+    
     HttpServer proxyServer = vertx.createHttpServer(new HttpServerOptions()
         .setPort(port)
         .setMaxInitialLineLength(10000)
@@ -70,15 +76,19 @@ public class Main {
           try {
 	          if(req.path().equals("/")) {
 	        	  	//proxy.handle(new HttpServerRequestCustom(req));
-	        	  	writePage(req);
+	        	  	writePage(req,conf);
 	        	  	
 	          }else if(req.path().equals("/js/index.js")) {
 	      	  	//proxy.handle(new HttpServerRequestCustom(req));
-	      	  	writeScript(req);
+	      	  	writeScript(req,conf);
+	      	  	
+	        }else if(req.path().equals("/admin/alertConfig")) {
+	      	  	//proxy.handle(new HttpServerRequestCustom(req));
+	      	  	writeAlertConfig(req,conf);
 	      	  	
 	        }else if(req.path().equals("/partials/admin/alert.html")) {
 	      	  	//proxy.handle(new HttpServerRequestCustom(req));
-	      	  	writeAlert(req);
+	      	  	writeAlert(req,conf);
 	      	  	
 	        }else {
 	        	  	proxy.handle(req);
@@ -96,16 +106,21 @@ public class Main {
     });
   }
   
-  private void writePage(HttpServerRequest req) throws MalformedURLException, IOException {
-	  new AdminManager(this.remoteHost,this.remotePort).enrichRequest(req);
+  private void writeAlertConfig(HttpServerRequest req, Configuration conf) throws IOException {
+	  new AdminManager(conf).fetchAlertConfig(req);
+	
+}
+
+private void writePage(HttpServerRequest req,Configuration conf) throws MalformedURLException, IOException {
+	  new AdminManager(conf).enrichRequest(req);
   }
   
-  private void writeScript(HttpServerRequest req) throws IOException {
-	  new AdminManager(this.remoteHost,this.remotePort).enrichJavaScriptRequest(req);
+  private void writeScript(HttpServerRequest req,Configuration conf) throws IOException {
+	  new AdminManager(conf).enrichJavaScriptRequest(req);
   }
 
-  private void writeAlert(HttpServerRequest req) throws IOException {
-	  new AdminManager(this.remoteHost,this.remotePort).enrichJAlertRequest(req);
+  private void writeAlert(HttpServerRequest req,Configuration conf) throws IOException {
+	  new AdminManager(conf).enrichJAlertRequest(req);
   }
 
   

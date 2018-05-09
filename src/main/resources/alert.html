@@ -20,35 +20,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <label>
-                  <input type="checkbox">
-                </label>
-              </td>
-              <td>Job 1</td>
-              <td>1</td>
-              <td>john@example.com <span class="pull-right"> <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></span></i></td>
-            </tr>
-            <tr>
-              <td>
-                <label>
-                  <input type="checkbox">
-                </label>
-              </td>
-              <td>Job 2</td>
-              <td>2</td>
-              <td>mary@example.com <span class="pull-right"> <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></span></i></td>
-            </tr>
-            <tr>
-              <td>
-                <label>
-                  <input type="checkbox">
-                </label>
-              </td>
-              <td>Job 3</td>
-              <td>3</td>
-              <td>july@example.com <span class="pull-right"> <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></span></i></td>
+            <tr ng-repeat="entry in alertmanager.config | orderBy: 'job_id'">
+              <td><label><input type="checkbox"></label></td>
+              <td>{{entry.job_id}}</td>
+              <td>{{entry.job_name}}</td>
+              <td>{{entry.emails}} <span class="pull-right"> <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></span></i></td>
             </tr>
           </tbody>
       </table>
