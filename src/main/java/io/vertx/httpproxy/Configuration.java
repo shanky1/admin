@@ -1,11 +1,13 @@
 package io.vertx.httpproxy;
 
+import lombok.Data;
 
+@Data
 public class Configuration {
 	
-	 public String host;
-	 public int port;
-	 public String remoteHost;
-	 public int remotePort;
+	 private String host;
+	 private int port;
+	 private String remoteHost;
+	 private int remotePort;
 
 }

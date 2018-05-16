@@ -1,8 +1,0 @@
-{
-"history":[
-{"job_id":"1","job_name":"alert 1","emails":"p@k.com,s@d.com","alert_time":"Sunday"},
-{"job_id":"2","job_name":"alert 2","emails":"ps@k.com,s2@d.com","alert_time":"Monday"},},
-{"job_id":"3","job_name":"alert 3","emails":"pd@k.com,s1@d.com","alert_time":"Tuesday"},},
-{"job_id":"4","job_name":"alert 4","emails":"pp@k.com,s@d.com","alert_time":"Sunday"},}
-]
-}

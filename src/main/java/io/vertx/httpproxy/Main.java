@@ -1,14 +1,7 @@
 package io.vertx.httpproxy;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
@@ -60,10 +53,10 @@ public class Main {
         .reverseProxy(client)
         .target(remotePort, remoteHost);
     Configuration conf = new Configuration();
-    conf.host = this.address;
-    conf.port = this.port;
-    conf.remoteHost = this.remoteHost;
-    conf.remotePort = this.remotePort;
+    conf.setHost( this.address );
+    conf.setPort( this.port );
+    conf.setRemoteHost( this.remoteHost );
+    conf.setRemotePort( this.remotePort );
     
     HttpServer proxyServer = vertx.createHttpServer(new HttpServerOptions()
         .setPort(port)
@@ -86,9 +79,17 @@ public class Main {
 	      	  	//proxy.handle(new HttpServerRequestCustom(req));
 	      	  	writeAlertConfig(req,conf);
 	      	  	
+	        }else if(req.path().equals("/admin/logConfig")) {
+	      	  	//proxy.handle(new HttpServerRequestCustom(req));
+	      	  	writeLogConfig(req,conf);
+	      	  	
 	        }else if(req.path().equals("/partials/admin/alert.html")) {
 	      	  	//proxy.handle(new HttpServerRequestCustom(req));
 	      	  	writeAlert(req,conf);
+	      	  	
+	        }else if(req.path().equals("/partials/admin/log.html")) {
+	      	  	//proxy.handle(new HttpServerRequestCustom(req));
+	      	  	writeLog(req,conf);
 	      	  	
 	        }else {
 	        	  	proxy.handle(req);
@@ -106,6 +107,15 @@ public class Main {
     });
   }
   
+  private void writeLog(HttpServerRequest req, Configuration conf) throws MalformedURLException, IOException {
+	  new AdminManager(conf).enrichLogRequest(req);
+	
+}
+
+private void writeLogConfig(HttpServerRequest req, Configuration conf) throws IOException {
+	  new AdminManager(conf).fetchLogConfig(req);
+}
+  
   private void writeAlertConfig(HttpServerRequest req, Configuration conf) throws IOException {
 	  new AdminManager(conf).fetchAlertConfig(req);
 }
@@ -119,7 +129,7 @@ private void writePage(HttpServerRequest req,Configuration conf) throws Malforme
   }
 
   private void writeAlert(HttpServerRequest req,Configuration conf) throws IOException {
-	  new AdminManager(conf).enrichJAlertRequest(req);
+	  new AdminManager(conf).enrichAlertRequest(req);
   }
 
   

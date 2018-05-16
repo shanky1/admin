@@ -4,7 +4,8 @@ public enum HTMLStuff {
 	
 	MENU("menu.html"),
 	JAVASCRIPT("index.js"), 
-	ALERT("alert.html");
+	ALERT("alert.html"),
+	LOG("log.html");
 	
 	
 	private String fileName;
