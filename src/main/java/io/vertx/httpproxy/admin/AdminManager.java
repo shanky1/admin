@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,15 +15,14 @@ import org.jsoup.nodes.Document;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.httpproxy.Configuration;
-import wiremock.com.google.common.collect.Lists;
-import wiremock.com.google.common.collect.Maps;
-import wiremock.org.apache.commons.collections4.map.HashedMap;
 
 public class AdminManager {
 	
@@ -118,7 +118,7 @@ public class AdminManager {
 				history.add(entry);
 			}
 			
-			Map<String,List<Map<String,String>>> jobsMap = new HashedMap<>();
+			Map<String,List<Map<String,String>>> jobsMap = new HashMap<>();
 			jobsMap.put("config", config);
 			jobsMap.put("history", config);
 			
