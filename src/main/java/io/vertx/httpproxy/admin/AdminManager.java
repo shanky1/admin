@@ -11,6 +11,8 @@ import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,13 +24,17 @@ import com.google.common.io.Resources;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.httpproxy.Configuration;
+import io.vertx.httpproxy.spring.Configuration;
 
+
+@Component
 public class AdminManager {
 	
 	private Configuration conf;
+	
 	private JobManager jm;
 	
+	@Autowired
 	public AdminManager(Configuration conf) {
 		this.conf = conf;
 		this.jm = new JobManager(conf);

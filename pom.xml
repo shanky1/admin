@@ -73,13 +73,17 @@
 	    <scope>provided</scope>
 	</dependency>
     <dependency>
-            <groupId>com.chibchasoft</groupId>
-            <artifactId>vertx-spring-verticle-factory</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-    
-
-    
+         <groupId>com.chibchasoft</groupId>
+         <artifactId>vertx-spring-verticle-factory</artifactId>
+         <version>1.0.2</version>
+     </dependency>
+     <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-context</artifactId>
+	    <version>5.0.6.RELEASE</version>
+	</dependency>
+     
 	<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 	<dependency>
 	    <groupId>org.jsoup</groupId>
@@ -91,6 +95,32 @@
 	  <artifactId>vertx-web-client</artifactId>
 	  <version>${stack.version}</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.camel/camel-core -->
+	<dependency>
+	    <groupId>org.apache.camel</groupId>
+	    <artifactId>camel-core</artifactId>
+	    <version>2.21.1</version>
+	    <exclusions>
+              <exclusion>
+                <groupId>org.slf4j</groupId>
+    				<artifactId>slf4j-api</artifactId>
+              </exclusion>
+            </exclusions>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.camel/camel-spring -->
+	<dependency>
+	    <groupId>org.apache.camel</groupId>
+	    <artifactId>camel-spring</artifactId>
+	    <version>2.21.1</version>
+	    <exclusions>
+              <exclusion>
+                <groupId>org.slf4j</groupId>
+    				<artifactId>slf4j-api</artifactId>
+              </exclusion>
+            </exclusions>
+	</dependency>
+	
+	
     <!-- Only for fatjar -->
     <dependency>
       <!-- declare this dependency to force shiro to use this one. It is the version used by vert.x -->
@@ -99,6 +129,18 @@
       <version>1.7.16</version>
       <optional>true</optional>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-simple</artifactId>
+	    <version>1.7.16</version>
+	</dependency>
+    <dependency>
+	    <groupId>org.apache.camel</groupId>
+	    <artifactId>camel-vertx</artifactId>
+	    <version>2.21.1</version>
+	    <!-- use the same version as your Camel core version -->
+	</dependency>
 
     <dependency>
       <groupId>io.vertx</groupId>

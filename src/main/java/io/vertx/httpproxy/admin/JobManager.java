@@ -2,6 +2,9 @@ package io.vertx.httpproxy.admin;
 
 import java.util.Iterator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
@@ -10,13 +13,15 @@ import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.ext.web.codec.BodyCodec;
-import io.vertx.httpproxy.Configuration;
+import io.vertx.httpproxy.spring.Configuration;
 
+@Component
 public class JobManager {
 	
 	private Configuration config;
 	WebClient client = null;
 	
+	@Autowired
 	public JobManager(Configuration config) {
 	this.config = config;
 		WebClientOptions options = new WebClientOptions()

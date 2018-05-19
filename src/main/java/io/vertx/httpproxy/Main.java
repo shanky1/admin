@@ -15,6 +15,7 @@ import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.httpproxy.admin.AdminManager;
+import io.vertx.httpproxy.spring.Configuration;
 
 /**
  * @author <a href="mailto:julien@julienviet.com">Julien Viet</a>
@@ -24,7 +25,7 @@ public class Main {
   @Parameter(names = "--port")
   public int port = 8090;
 
-  @Parameter(names = "--address")
+  @Parameter(names = "--host")
   public String address = "localhost";
   
   @Parameter(names = "--remoteHost")
